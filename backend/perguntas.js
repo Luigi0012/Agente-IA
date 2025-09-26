@@ -1,4 +1,4 @@
-export const perguntas = [
+export const perguntasParte1 = [
   {
     id: 1,
     texto: "Qual atividade você mais gosta?",
@@ -8,7 +8,10 @@ export const perguntas = [
       C: { texto: "Atender pacientes", profissao: "Médico" },
       D: { texto: "Programar softwares", profissao: "Programador" }
     }
-  },
+  }
+];
+
+export const perguntasParte2 = [
   {
     id: 2,
     texto: "Qual tarefa você prefere?",
