@@ -11,7 +11,7 @@
   }
   
   .Container {
-    margin: 50px 0;
+    margin: 0 0 0 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -34,11 +34,11 @@
     }
   
     .formul {
-      margin-bottom: 30px;
+      margin-bottom: 0px;
       
       img {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
         filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
         animation: float 3s ease-in-out infinite;
       }
@@ -74,7 +74,7 @@
       top: 10px;
       left: 10px;
       width: calc(100% - 20px);
-      height: calc(100% - 20px);
+      height: calc(100% - -30px);
       background: linear-gradient(145deg, #a1cdff, #87ceeb);
       clip-path: polygon(
         10% 0%, 90% 0%,
@@ -89,8 +89,8 @@
       position: absolute;
       top: 25px;
       left: 25px;
-      width: calc(100% - 50px);
-      height: calc(100% - 50px);
+      width: calc(100% - 45px);
+      height: calc(100% - 2px);
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       clip-path: polygon(
@@ -105,11 +105,11 @@
     .main {
       z-index: 1;
       position: absolute;
-      top: 53%;
-      left: 50%;
+      top: 55%;
+      left: 50.3%;
       transform: translate(-50%, -50%);
       width: 750px;
-      height: 450px;
+      height: 500px;
       background: linear-gradient(145deg, #a1cdff, #87ceeb);
       display: flex;
       flex-direction: column;
@@ -123,7 +123,7 @@
         0% 90%, 0% 10%
       );
       
-      // Transição suave para mudanças de conteúdo
+      
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   
       h1 {
@@ -264,8 +264,8 @@
     }
   
     .enviarBotao {
-      margin-top: 40px;
-      padding: 15px 40px;
+      margin-top: 50px;
+      padding: 20px 65px;
       background: linear-gradient(135deg, #007BFF, #0056b3);
       color: white;
       border: none;

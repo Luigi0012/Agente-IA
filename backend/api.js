@@ -6,26 +6,27 @@ const api = express();
 api.use(express.json());
 api.use(cors());
 
-let respostas = {}; // { userId: { parte: 'parte1', respostas: [] } }
+let respostas = {}; // { userId: { parte: 'parte1', respostas: [], perguntaAtual: 0 } }
 
 api.post('/respostas', (req, resp) => {
   const { userId, perguntaId, alternativa, primeira } = req.body;
 
   if (!respostas[userId]) {
-    respostas[userId] = { parte: 'parte1', respostas: [] };
+    respostas[userId] = { parte: 'parte1', respostas: [], perguntaAtual: 0 };
   }
 
   const usuario = respostas[userId];
-  const perguntasAtuais = usuario.parte === 'parte1' ? perguntasParte1 : perguntasParte2;
 
   // Se for primeira requisição, limpa dados anteriores e retorna a primeira pergunta
   if (primeira) {
-    // Limpar dados anteriores do usuário
-    respostas[userId] = { parte: 'parte1', respostas: [] };
+    respostas[userId] = { parte: 'parte1', respostas: [], perguntaAtual: 0 };
     return resp.json({ tipo: "pergunta", conteudo: perguntasParte1[0] });
   }
 
-  const pergunta = perguntasAtuais[perguntaId];
+  const perguntasAtuais = usuario.parte === 'parte1' ? perguntasParte1 : perguntasParte2;
+  
+  // Usar perguntaAtual ao invés de perguntaId para evitar conflitos
+  const pergunta = perguntasAtuais[usuario.perguntaAtual];
   if (!pergunta) return resp.status(400).json({ erro: "Pergunta não encontrada" });
 
   const alternativaEscolhida = pergunta.alternativas[alternativa];
@@ -33,15 +34,17 @@ api.post('/respostas', (req, resp) => {
 
   const profissao = alternativaEscolhida.profissao;
   usuario.respostas.push(profissao);
+  usuario.perguntaAtual++;
 
   // Verifica se ainda há mais perguntas na parte atual
-  if (perguntaId + 1 < perguntasAtuais.length) {
-    return resp.json({ tipo: "pergunta", conteudo: perguntasAtuais[perguntaId + 1] });
+  if (usuario.perguntaAtual < perguntasAtuais.length) {
+    return resp.json({ tipo: "pergunta", conteudo: perguntasAtuais[usuario.perguntaAtual] });
   }
 
   // Se acabaram as perguntas da parte 1, vai para parte 2
   if (usuario.parte === 'parte1') {
     usuario.parte = 'parte2';
+    usuario.perguntaAtual = 0; // Reset do índice para parte 2
     return resp.json({ tipo: "pergunta", conteudo: perguntasParte2[0] });
   }
 
